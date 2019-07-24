@@ -38,6 +38,7 @@ export const NewPlayList = styled.button`
 export const Nav = styled.ul`
 list-style: none;
 margin-top: 25px;
+cursor: pointer;
 
 &:first-child {
   margin: 0;
@@ -65,4 +66,6 @@ li {
     font-weight: 300;
   }
 }
+
+
 `;
