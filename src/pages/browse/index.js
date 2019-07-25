@@ -1,40 +1,60 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import { Container, Title, List, Playlist } from './styles';
 
-export default class Browse extends Component {
+import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
+import Loading from '../../components/loading';
+
+class Browse extends Component {
+  static propTypes = {
+    getPlaylistsRequest: PropTypes.func.isRequired,
+    playlists: PropTypes.shape({
+      data: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number,
+          thumbnail: PropTypes.string,
+          title: PropTypes.string,
+          description: PropTypes.string,
+          loading: PropTypes.bool
+        })
+      )
+    }).isRequired
+  };
+
+  componentDidMount() {
+    this.props.getPlaylistsRequest();
+  }
+
   render() {
     return (
       <Container>
-        <Title>Navegar</Title>
+        <Title>Navegar {this.props.playlists.loading && <Loading />}</Title>
 
         <List>
-          <Playlist to="/playlists/1">
-            <img
-              src="https://is2-ssl.mzstatic.com/image/thumb/Music118/v4/f0/f9/9f/f0f99fa4-3685-cf99-9676-3b303e22fbf7/source/1200x1200bb.jpg"
-              alt="capa album"
-            />
-            <strong>Bohemias</strong>
-            <p>Eu não sei o que é isso.</p>
-          </Playlist>
-          <Playlist to="/playlists/1">
-            <img
-              src="https://is2-ssl.mzstatic.com/image/thumb/Music118/v4/f0/f9/9f/f0f99fa4-3685-cf99-9676-3b303e22fbf7/source/1200x1200bb.jpg"
-              alt="capa album"
-            />
-            <strong>Bohemias</strong>
-            <p>Eu não sei o que é isso.</p>
-          </Playlist>
-          <Playlist to="/playlists/1">
-            <img
-              src="https://is2-ssl.mzstatic.com/image/thumb/Music118/v4/f0/f9/9f/f0f99fa4-3685-cf99-9676-3b303e22fbf7/source/1200x1200bb.jpg"
-              alt="capa album"
-            />
-            <strong>Bohemias</strong>
-            <p>Eu não sei o que é isso.</p>
-          </Playlist>
+          {this.props.playlists.data.map(playlist => (
+            <Playlist key={playlist.id} to={`/playlists/${playlist.id}`}>
+              <img src={playlist.thumbnail} alt="capa album" />
+              <strong>{playlist.title}</strong>
+              <p>{playlist.description}</p>
+            </Playlist>
+          ))}
         </List>
       </Container>
     );
   }
 }
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(PlaylistsActions, dispatch);
+
+const mapStateToProps = state => ({
+  playlists: state.playlists
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Browse);

@@ -1,17 +1,40 @@
 import React, { Component } from 'react';
-
-import { Container, NewPlayList, Nav } from './styles';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import AddPlaylistIcon from '../../assets/images/add_playlist.svg';
+import { Container, NewPlayList, Nav } from './styles';
+
+import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
+import Loading from '../../components/loading';
 
 class Sidebar extends Component {
+  static propTypes = {
+    getPlaylistsRequest: PropTypes.func.isRequired,
+    playlists: PropTypes.shape({
+      data: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number,
+          title: PropTypes.string,
+          loading: PropTypes.bool
+        })
+      )
+    }).isRequired
+  };
+
+  componentDidMount() {
+    this.props.getPlaylistsRequest();
+  }
+
   render() {
     return (
       <Container>
         <div>
           <Nav main>
             <li>
-              <a>Navegar</a>
+              <Link to={'/'}>Navegar</Link>
             </li>
             <li>
               <a>Rádio</a>
@@ -51,10 +74,13 @@ class Sidebar extends Component {
           <Nav>
             <li>
               <span>PLAYLISTS</span>
+              {this.props.playlists.loading && <Loading />}
             </li>
-            <li>
-              <a href="">Melhores do rock</a>
-            </li>
+            {this.props.playlists.data.map(playlist => (
+              <li key={playlist.id}>
+                <Link to={`/playlists/${playlist.id}`}>{playlist.title}</Link>
+              </li>
+            ))}
           </Nav>
         </div>
         <NewPlayList>
@@ -66,4 +92,14 @@ class Sidebar extends Component {
   }
 }
 
-export default Sidebar;
+const mapStateToProps = state => ({
+  playlists: state.playlists
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(PlaylistsActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Sidebar);

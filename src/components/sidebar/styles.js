@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { Spinner } from '../../components/loading/styles';
+
 export const Container = styled.aside`
   height: 100%;
   width: 200px;
@@ -45,6 +47,9 @@ cursor: pointer;
 }
 
 li {
+display: flex;
+align-items: center;
+
   a {
     color: inherit;
     text-decoration: none;
@@ -64,6 +69,11 @@ li {
     line-height: 22px;
     letter-spacing: 1.11px;
     font-weight: 300;
+  }
+
+  ${Spinner} {
+    height: 15px;
+    margin-left: 5px;
   }
 }
 
