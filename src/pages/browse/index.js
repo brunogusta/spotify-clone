@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { Container, Title, List, Playlist } from './styles';
+import {
+  Container, Title, List, Playlist,
+} from './styles';
 
 import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
 import Loading from '../../components/loading';
@@ -15,26 +17,31 @@ class Browse extends Component {
       data: PropTypes.arrayOf(
         PropTypes.shape({
           id: PropTypes.number,
-          thumbnail: PropTypes.string,
           title: PropTypes.string,
+          thumbnail: PropTypes.string,
           description: PropTypes.string,
-          loading: PropTypes.bool
-        })
-      )
-    }).isRequired
+        }),
+      ),
+      loading: PropTypes.bool,
+    }).isRequired,
   };
 
   componentDidMount() {
-    this.props.getPlaylistsRequest();
+    const { getPlaylistsRequest } = this.props;
+    getPlaylistsRequest();
   }
 
   render() {
+    const playlists = this.props;
     return (
       <Container>
-        <Title>Navegar {this.props.playlists.loading && <Loading />}</Title>
+        <Title>
+          Navegar
+          {playlists.loading && <Loading />}
+        </Title>
 
         <List>
-          {this.props.playlists.data.map(playlist => (
+          {playlists.data.map(playlist => (
             <Playlist key={playlist.id} to={`/playlists/${playlist.id}`}>
               <img src={playlist.thumbnail} alt="capa album" />
               <strong>{playlist.title}</strong>
@@ -47,14 +54,13 @@ class Browse extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(PlaylistsActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(PlaylistsActions, dispatch);
 
 const mapStateToProps = state => ({
-  playlists: state.playlists
+  playlists: state.playlists,
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Browse);

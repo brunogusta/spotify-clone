@@ -1,11 +1,11 @@
 export const Types = {
   GET_REQUEST: 'playlists/GET_REQUEST',
-  GET_SUCCESS: 'playlists/GET_SUCCESS'
+  GET_SUCCESS: 'playlists/GET_SUCCESS',
 };
 
 const INITIAL_STATE = {
   loading: false,
-  data: []
+  data: [],
 };
 
 export default function playlists(state = INITIAL_STATE, action) {
@@ -26,6 +26,6 @@ export const Creators = {
 
   getPlaylistsSuccess: data => ({
     type: Types.GET_SUCCESS,
-    payload: { data }
-  })
+    payload: { data },
+  }),
 };

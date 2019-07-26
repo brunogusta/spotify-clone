@@ -9,6 +9,6 @@ import songsSaga from './songs';
 export default function* rootSaga() {
   yield all([
     takeLatest(Playlist.GET_REQUEST, playlistsSaga),
-    takeLatest(Songs.GET_REQUEST, songsSaga)
+    takeLatest(Songs.GET_REQUEST, songsSaga),
   ]);
 }

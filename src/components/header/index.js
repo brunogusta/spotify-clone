@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { Container, Search, User } from './styles';
 
-export default class Header extends Component {
+const Header = () => ({
   render() {
     return (
       <Container>
@@ -11,13 +11,12 @@ export default class Header extends Component {
         </Search>
 
         <User>
-          <img
-            src="https://avatars3.githubusercontent.com/u/50206533?v=4"
-            alt="avatar"
-          />
+          <img src="https://avatars3.githubusercontent.com/u/50206533?v=4" alt="avatar" />
           Bruno Gustavo
         </User>
       </Container>
     );
-  }
-}
+  },
+});
+
+export default Header;

@@ -1,11 +1,11 @@
 export const Types = {
   GET_REQUEST: 'songs/GET_REQUEST',
-  GET_SUCCESS: 'songs/GET_SUCCESS'
+  GET_SUCCESS: 'songs/GET_SUCCESS',
 };
 
 const INITIAL_STATE = {
   loading: false,
-  data: {}
+  data: {},
 };
 
 export default function songs(state = INITIAL_STATE, action) {
@@ -24,11 +24,11 @@ export default function songs(state = INITIAL_STATE, action) {
 export const Creators = {
   getSongsRequest: id => ({
     type: Types.GET_REQUEST,
-    payload: { id }
+    payload: { id },
   }),
 
   getSongsSuccess: data => ({
     type: Types.GET_SUCCESS,
-    payload: { data }
-  })
+    payload: { data },
+  }),
 };

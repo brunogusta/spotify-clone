@@ -7,15 +7,10 @@ import { Creators as ErrorActions } from '../ducks/error';
 
 export default function* songsSaga(action) {
   try {
-    const { data } = yield call(
-      api.get,
-      `/playlists/${action.payload.id}?_embed=songs`
-    );
+    const { data } = yield call(api.get, `/playlists/${action.payload.id}?_embed=songs`);
 
     yield put(songActions.getSongsSuccess(data));
   } catch (err) {
-    yield put(
-      ErrorActions.setError('Não foi possível obter as músicas desta playlist.')
-    );
+    yield put(ErrorActions.setError('Não foi possível obter as músicas desta playlist.'));
   }
 }

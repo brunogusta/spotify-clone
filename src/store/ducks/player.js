@@ -9,7 +9,7 @@ export const Types = {
   PLAYING: 'player/PLAYING',
   HANDLE_POSITION: 'player/HANDLE_POSITION',
   SET_POSITION: 'player/SET_POSITION',
-  SET_VOLUME: 'player/SET_VOLUME'
+  SET_VOLUME: 'player/SET_VOLUME',
 };
 
 const INITIAL_STATE = {
@@ -19,7 +19,7 @@ const INITIAL_STATE = {
   position: null,
   duration: null,
   positionShown: null,
-  volume: 100
+  volume: 20,
 };
 
 export default function player(state = INITIAL_STATE, action) {
@@ -29,23 +29,21 @@ export default function player(state = INITIAL_STATE, action) {
         ...state,
         currentSong: action.payload.song,
         status: Sound.status.PLAYING,
-        list: action.payload.list
+        list: action.payload.list,
       };
     case Types.PLAY:
       return {
         ...state,
-        status: Sound.status.PLAYING
+        status: Sound.status.PLAYING,
       };
     case Types.PAUSE:
       return {
         ...state,
-        status: Sound.status.PAUSED
+        status: Sound.status.PAUSED,
       };
 
     case Types.NEXT: {
-      const currentIndex = state.list.findIndex(
-        song => song.id === state.currentSong.id
-      );
+      const currentIndex = state.list.findIndex(song => song.id === state.currentSong.id);
       const next = state.list[currentIndex + 1];
 
       if (next) {
@@ -53,7 +51,7 @@ export default function player(state = INITIAL_STATE, action) {
           ...state,
           currentSong: next,
           status: Sound.status.PLAYING,
-          position: null
+          position: null,
         };
       }
 
@@ -61,9 +59,7 @@ export default function player(state = INITIAL_STATE, action) {
     }
 
     case Types.PREV: {
-      const currentIndex = state.list.findIndex(
-        song => song.id === state.currentSong.id
-      );
+      const currentIndex = state.list.findIndex(song => song.id === state.currentSong.id);
       const prev = state.list[currentIndex - 1];
 
       if (prev) {
@@ -71,7 +67,7 @@ export default function player(state = INITIAL_STATE, action) {
           ...state,
           currentSong: prev,
           status: Sound.status.PLAYING,
-          position: null
+          position: null,
         };
       }
 
@@ -82,13 +78,13 @@ export default function player(state = INITIAL_STATE, action) {
       return {
         ...state,
         position: action.payload.position,
-        duration: action.payload.duration
+        duration: action.payload.duration,
       };
     }
     case Types.HANDLE_POSITION: {
       return {
         ...state,
-        positionShown: state.duration * action.payload.percent
+        positionShown: state.duration * action.payload.percent,
       };
     }
 
@@ -96,13 +92,13 @@ export default function player(state = INITIAL_STATE, action) {
       return {
         ...state,
         position: state.duration * action.payload.percent,
-        positionShown: 0
+        positionShown: 0,
       };
     }
     case Types.SET_VOLUME: {
       return {
         ...state,
-        volume: action.payload.value
+        volume: action.payload.value,
       };
     }
 
@@ -114,42 +110,42 @@ export default function player(state = INITIAL_STATE, action) {
 export const Creators = {
   loadSong: (song, list) => ({
     type: Types.LOAD,
-    payload: { song, list }
+    payload: { song, list },
   }),
 
   play: () => ({
-    type: Types.PLAY
+    type: Types.PLAY,
   }),
 
   pause: () => ({
-    type: Types.PAUSE
+    type: Types.PAUSE,
   }),
 
   next: () => ({
-    type: Types.NEXT
+    type: Types.NEXT,
   }),
 
   prev: () => ({
-    type: Types.PREV
+    type: Types.PREV,
   }),
 
   playing: ({ position, duration }) => ({
     type: Types.PLAYING,
-    payload: { position, duration }
+    payload: { position, duration },
   }),
 
   handlePosition: percent => ({
     type: Types.HANDLE_POSITION,
-    payload: { percent }
+    payload: { percent },
   }),
 
   setPosition: percent => ({
     type: Types.SET_POSITION,
-    payload: { percent }
+    payload: { percent },
   }),
 
   setVolume: value => ({
     type: Types.SET_VOLUME,
-    payload: { value }
-  })
+    payload: { value },
+  }),
 };
