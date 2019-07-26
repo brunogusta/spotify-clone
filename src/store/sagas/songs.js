@@ -3,6 +3,7 @@ import { call, put } from 'redux-saga/effects';
 import api from '../../services/api';
 
 import { Creators as songActions } from '../ducks/songs';
+import { Creators as ErrorActions } from '../ducks/error';
 
 export default function* songsSaga(action) {
   try {
@@ -13,6 +14,8 @@ export default function* songsSaga(action) {
 
     yield put(songActions.getSongsSuccess(data));
   } catch (err) {
-    console.log(err);
+    yield put(
+      ErrorActions.setError('Não foi possível obter as músicas desta playlist.')
+    );
   }
 }

@@ -33,8 +33,8 @@ export const User = styled.div`
 
   img {
     margin-right: 10px;
-    height: 48px;
-    width: 48px;
+    height: 38px;
+    width: 38px;
     border-radius: 50%;
   }
 `;

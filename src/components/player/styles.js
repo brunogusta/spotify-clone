@@ -12,7 +12,7 @@ export const Container = styled.div`
 export const Current = styled.div`
   display: flex;
   align-items: center;
-
+  width: 220px;
   img {
     width: 48px;
     height: 48px;
@@ -40,6 +40,7 @@ export const Progress = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 483px;
 `;
 
 export const Controls = styled.div`
@@ -61,11 +62,12 @@ export const Time = styled.div`
   span {
     font-size: 11px;
     color: #b3b3b3;
+    width: 20px;
   }
 `;
 
 export const ProgressSlider = styled.div`
-  width: 410px;
+  width: 483px;
   margin: 0 15px;
 `;
 

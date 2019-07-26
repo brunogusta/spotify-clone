@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
 
-import AddPlaylistIcon from '../../assets/images/add_playlist.svg';
 import { Container, NewPlayList, Nav } from './styles';
 
-import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
+import AddPlaylistIcon from '../../assets/images/add_playlist.svg';
 import Loading from '../../components/loading';
 
 class Sidebar extends Component {
