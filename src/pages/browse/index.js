@@ -32,7 +32,8 @@ class Browse extends Component {
   }
 
   render() {
-    const playlists = this.props;
+    const { playlists } = this.props;
+
     return (
       <Container>
         <Title>
@@ -54,11 +55,11 @@ class Browse extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators(PlaylistsActions, dispatch);
-
 const mapStateToProps = state => ({
   playlists: state.playlists,
 });
+
+const mapDispatchToProps = dispatch => bindActionCreators(PlaylistsActions, dispatch);
 
 export default connect(
   mapStateToProps,
